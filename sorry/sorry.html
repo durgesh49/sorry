@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>For My Jaanu ❤️ | Durgesh's Apology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, 'Poppins', 'Dancing Script', cursive;
+            background: linear-gradient(145deg, #ffe6f0 0%, #ffc0d0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts canvas background */
+        #floating-hearts-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* main content wrapper */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* password screen */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 220, 230, 0.96);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), visibility 0.8s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .password-card {
+            background: rgba(255, 245, 248, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 2.5rem 2rem;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(255, 105, 130, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5);
+            animation: floatGlow 2s ease infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translateY(0px); box-shadow: 0 25px 40px rgba(255, 80, 120, 0.2);}
+            100% { transform: translateY(-8px); box-shadow: 0 35px 50px rgba(255, 80, 120, 0.4);}
+        }
+
+        .password-card h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ff4d6d, #ffb3c6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .password-card p {
+            color: #a13e54;
+            margin-bottom: 1.8rem;
+            font-weight: 500;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: none;
+            border-radius: 60px;
+            background: #fff0f3;
+            box-shadow: inset 0 1px 4px #ffb7c7, 0 2px 6px rgba(0,0,0,0.02);
+            font-weight: 600;
+            letter-spacing: 2px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .password-input:focus {
+            background: white;
+            box-shadow: inset 0 0 0 2px #ff8aa3;
+        }
+
+        .unlock-btn {
+            margin-top: 1.5rem;
+            background: linear-gradient(95deg, #ff6b8b, #ff4070);
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 14px rgba(255, 64, 100, 0.4);
+            width: 80%;
+        }
+
+        .unlock-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #ff7c99, #ff5a84);
+            box-shadow: 0 8px 20px #ff809d;
+        }
+
+        .error-msg {
+            margin-top: 1rem;
+            color: #e6436e;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-height: 2rem;
+        }
+
+        /* hidden screens transition */
+        .hidden-screen {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Welcome card (second screen) */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 230, 238, 0.97);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 900;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+
+        .welcome-card {
+            background: rgba(255, 252, 253, 0.9);
+            border-radius: 60px;
+            padding: 2.8rem 2rem;
+            width: 90%;
+            max-width: 520px;
+            text-align: center;
+            box-shadow: 0 30px 50px rgba(255, 100, 130, 0.3);
+            backdrop-filter: blur(15px);
+            animation: gentleRise 0.8s ease;
+        }
+
+        @keyframes gentleRise {
+            from { opacity: 0; transform: scale(0.96) translateY(20px);}
+            to { opacity: 1; transform: scale(1) translateY(0);}
+        }
+
+        .welcome-card h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #ff5177, #ff9eb9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .heart-button {
+            background: #ff88a5;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(255, 90, 120, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .heart-button:hover {
+            background: #ff6b91;
+            transform: scale(1.02);
+            letter-spacing: 1px;
+        }
+
+        /* main website */
+        .main-site {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: linear-gradient(125deg, #ffeef4, #ffd9e3);
+        }
+
+        .main-site.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #da3e64;
+            text-shadow: 3px 3px 12px rgba(255, 150, 180, 0.5);
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #b34162;
+            margin-top: 0.8rem;
+            font-weight: 500;
+        }
+
+        .glass-card {
+            background: rgba(255, 245, 245, 0.65);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 12px 28px rgba(255, 80, 110, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .apology-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #461e2c;
+            font-family: 'Segoe UI', 'Quicksand', system-ui;
+            white-space: pre-line;
+            text-align: center;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            width: 260px;
+            box-shadow: 0 18px 28px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.2,0.8,0.4,1);
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 28px 35px rgba(255, 80, 100, 0.3);
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(145deg, #ffb7c7, #ff9bb0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            transition: 0.3s;
+        }
+
+        /* image replacement */
+        .img-placeholder[data-img="1"] { background-image: url('photo1.jpg'); background-size: cover; background-position: center; }
+        .img-placeholder[data-img="2"] { background-image: url('photo2.jpg'); background-size: cover; background-position: center; }
+        .img-placeholder[data-img="3"] { background-image: url('photo3.jpg'); background-size: cover; background-position: center; }
+        
+        .img-placeholder span {
+            background: rgba(0,0,0,0.3);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        .gallery-card p {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: #ba2d52;
+        }
+
+        .forgive-section {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .forgive-section h2 {
+            font-size: 2rem;
+            color: #d43f67;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 80px;
+        }
+
+        .yes-btn {
+            background: #ff5c83;
+            border: none;
+            padding: 12px 32px;
+            font-size: 1.3rem;
+            border-radius: 100px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px #ff9eb9;
+        }
+
+        .maybe-btn {
+            background: #ffb347;
+            border: none;
+            padding: 12px 32px;
+            font-size: 1.3rem;
+            border-radius: 100px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .yes-btn:hover {
+            background: #ff3366;
+            transform: scale(1.03);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #b15c74;
+            font-weight: 500;
+        }
+
+        /* popup modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .popup-card {
+            background: #fff0f5;
+            border-radius: 58px;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            max-width: 450px;
+            width: 85%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 30px 45px rgba(0,0,0,0.3);
+            border: 2px solid #ffa6c1;
+        }
+
+        .popup-card h3 {
+            font-size: 2rem;
+            color: #ff4777;
+            margin-bottom: 1rem;
+        }
+
+        .popup-card p {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .close-popup {
+            margin-top: 1.5rem;
+            background: #ff9bbb;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        /* heart rain animation */
+        .heart-rain {
+            position: fixed;
+            top: -10px;
+            font-size: 1.6rem;
+            pointer-events: none;
+            animation: fall 4s linear forwards;
+            z-index: 1500;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffdde8;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #ffb3c6;
+            border-top: 6px solid #ff4070;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 650px) {
+            .hero h1 { font-size: 2.2rem; }
+            .btn-group { gap: 1rem; }
+        }
+        
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            background: radial-gradient(circle, #ffd966, #ffb347);
+            border-radius: 50%;
+            animation: sparkleFade 1s ease-out forwards;
+            z-index: 1300;
+        }
+
+        @keyframes sparkleFade {
+            0% { opacity: 1; transform: scale(0);}
+            100% { opacity: 0; transform: scale(1.5);}
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader" class="loader">
+    <div class="spinner"></div>
+</div>
+
+<canvas id="floating-hearts-canvas"></canvas>
+
+<!-- Password Screen -->
+<div id="passwordScreen" class="password-screen">
+    <div class="password-card">
+        <h2>🔐 Secret Garden</h2>
+        <p>For Jaanu's eyes only 💕</p>
+        <input type="password" id="passwordInput" class="password-input" placeholder="Enter code" autocomplete="off">
+        <button id="unlockBtn" class="unlock-btn">Unlock Love</button>
+        <div id="errorMsg" class="error-msg"></div>
+    </div>
+</div>
+
+<!-- Welcome screen (second screen) -->
+<div id="welcomeScreen" class="welcome-screen hidden-screen">
+    <div class="welcome-card">
+        <h1>A Special Message For Jaanu ❤️</h1>
+        <button id="openHeartBtn" class="heart-button">Open My Heart 💌</button>
+    </div>
+</div>
+
+<!-- Main Website Content -->
+<div id="mainSite" class="main-site">
+    <div class="container">
+        <div class="hero">
+            <h1>Please Forgive Me 🥺</h1>
+            <p>For the most special person in my life ❤️</p>
+        </div>
+
+        <div class="glass-card">
+            <div class="apology-text">
+                Jaanu,<br><br>
+                I really don't know what has happened, I am really feeling very scared, you never do this, I am really sorry if I have done something wrong and please forgive me<br><br>
+                And if there is anything else then please tell me, we both will solve it together, if you don't talk to me like this then nothing is going to happen from this, it will just create more problems.<br><br>
+                And if I am really in trouble, then talk to me calmly once, otherwise I will keep messaging you like this, if there is something like this, then tell me clearly, I will go on with your life, really, but it is not like this, my love, and I hope fully that you will forgive me, I am sorry and please forgive me.<br><br>
+                ❤️<br><br>
+                — Durgesh
+            </div>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-card">
+                <div class="img-placeholder" data-img="1"><span>📸 Our Memory</span></div>
+                <p>Our happy smile ✨</p>
+            </div>
+            <div class="gallery-card">
+                <div class="img-placeholder" data-img="2"><span>💖 Cute Moments</span></div>
+                <p>Magic together 🌸</p>
+            </div>
+            <div class="gallery-card">
+                <div class="img-placeholder" data-img="3"><span>🌷 Forever</span></div>
+                <p>You & Me ❤️</p>
+            </div>
+        </div>
+
+        <div class="glass-card forgive-section">
+            <h2>Will You Forgive Me? ❤️</h2>
+            <div class="btn-group">
+                <button id="yesBtn" class="yes-btn">Yes 💖</button>
+                <button id="maybeBtn" class="maybe-btn">Nhhh 🥺</button>
+            </div>
+        </div>
+
+        <footer>
+            Made With ❤️ By Durgesh
+        </footer>
+    </div>
+</div>
+
+<!-- Popup for Yes -->
+<div id="popupOverlay" class="popup-overlay">
+    <div class="popup-card">
+        <h3>🎀 Thank You So Muchhhh ❤️</h3>
+        <p>I Loveee Uhhhh🥺💕<br>ab msg kro mujhe plzzz🥺🥺</p>
+        <button class="close-popup" id="closePopupBtn">🌷 Close</button>
+    </div>
+</div>
+
+<script>
+    // init loader
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('hide');
+            setTimeout(() => loader.style.display = 'none', 500);
+        }, 800);
+    });
+
+    // DOM elements
+    const passwordScreen = document.getElementById('passwordScreen');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const mainSite = document.getElementById('mainSite');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsgDiv = document.getElementById('errorMsg');
+    const openHeartBtn = document.getElementById('openHeartBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const maybeBtn = document.getElementById('maybeBtn');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+
+    // Background music with autoplay handling
+    let bgMusic = null;
+    function initMusic() {
+        bgMusic = new Audio('music.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.4;
+        const attemptAuto = () => {
+            bgMusic.play().catch(e => {
+                console.log("Autoplay prevented, will start on first click");
+                document.body.addEventListener('click', function once() {
+                    if (bgMusic && bgMusic.paused === false) bgMusic.play().catch(()=>{});
+                    document.body.removeEventListener('click', once);
+                }, { once: true });
+            });
+        };
+        attemptAuto();
+    }
+
+    // correct password validation
+    function checkPassword() {
+        const pwd = passwordInput.value.trim();
+        if (pwd === "1127") {
+            errorMsgDiv.innerText = "";
+            passwordScreen.classList.add('hidden-screen');
+            setTimeout(() => {
+                passwordScreen.style.display = 'none';
+                welcomeScreen.classList.remove('hidden-screen');
+                initMusic();
+            }, 600);
+        } else {
+            errorMsgDiv.innerText = "💔 Oops! Wrong password, my love! Try again 💕";
+            passwordInput.value = "";
+            passwordInput.style.animation = "shake 0.3s ease";
+            setTimeout(() => passwordInput.style.animation = "", 400);
+        }
+    }
+
+    unlockBtn.addEventListener('click', checkPassword);
+    passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
+
+    // open heart button: show main website with smooth transition
+    openHeartBtn.addEventListener('click', () => {
+        welcomeScreen.classList.add('hidden-screen');
+        setTimeout(() => {
+            welcomeScreen.style.display = 'none';
+            mainSite.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            startFloatingHearts();
+        }, 500);
+    });
+
+    // floating hearts canvas
+    let heartCanvas, ctx, heartsArray = [], animationId;
+    function startFloatingHearts() {
+        heartCanvas = document.getElementById('floating-hearts-canvas');
+        if (!heartCanvas) return;
+        heartCanvas.width = window.innerWidth;
+        heartCanvas.height = window.innerHeight;
+        ctx = heartCanvas.getContext('2d');
+        class Heart {
+            constructor() {
+                this.x = Math.random() * heartCanvas.width;
+                this.y = Math.random() * heartCanvas.height;
+                this.size = Math.random() * 20 + 12;
+                this.speedY = Math.random() * 0.8 + 0.4;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.swing = Math.random() * Math.PI * 2;
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.font = `${this.size}px "Segoe UI Emoji"`;
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = "#ff6b8b";
+                ctx.fillText("❤️", this.x, this.y);
+                ctx.globalAlpha = 1;
+            }
+            update() {
+                this.y += this.speedY;
+                this.swing += 0.02;
+                this.x += Math.sin(this.swing) * 0.3;
+                if (this.y > heartCanvas.height + 50) {
+                    this.y = -30;
+                    this.x = Math.random() * heartCanvas.width;
+                }
+                if (this.x > heartCanvas.width + 30) this.x = -30;
+                if (this.x < -30) this.x = heartCanvas.width;
+            }
+        }
+        for (let i = 0; i < 45; i++) heartsArray.push(new Heart());
+        function animateHearts() {
+            if (!ctx || !heartCanvas) return;
+            ctx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+            for (let heart of heartsArray) {
+                heart.update();
+                heart.draw();
+            }
+            animationId = requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+        window.addEventListener('resize', () => {
+            heartCanvas.width = window.innerWidth;
+            heartCanvas.height = window.innerHeight;
+        });
+    }
+
+    // Heart rain on YES
+    function createHeartRain() {
+        for (let i = 0; i < 130; i++) {
+            const heart = document.createElement('div');
+            heart.innerHTML = ['❤️','💖','💕','💗','🌸','✨','💘'][Math.floor(Math.random()*6)];
+            heart.classList.add('heart-rain');
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 24 + 16) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+            heart.style.opacity = Math.random() * 0.9 + 0.4;
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        for (let s=0; s<70; s++) {
+            const spark = document.createElement('div');
+            spark.classList.add('sparkle');
+            spark.style.left = Math.random() * window.innerWidth + 'px';
+            spark.style.top = Math.random() * window.innerHeight + 'px';
+            spark.style.width = spark.style.height = Math.random() * 10 + 5 + 'px';
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 1000);
+        }
+    }
+
+    yesBtn.addEventListener('click', () => {
+        createHeartRain();
+        popupOverlay.style.visibility = 'visible';
+        popupOverlay.style.opacity = '1';
+        const popCard = document.querySelector('.popup-card');
+        if (popCard) popCard.style.transform = 'scale(1)';
+    });
+
+    closePopupBtn.addEventListener('click', () => {
+        popupOverlay.style.visibility = 'hidden';
+        popupOverlay.style.opacity = '0';
+    });
+
+    // ========== MAYBE BUTTON: SUPER ESCAPE - Hover OR Click pe bhagega ==========
+    let maybeMoveInterval = null;
+
+    function escapeMaybeButton() {
+        if (!maybeBtn) return;
+        
+        const btnRect = maybeBtn.getBoundingClientRect();
+        const btnWidth = btnRect.width;
+        const btnHeight = btnRect.height;
+        
+        const maxX = window.innerWidth - btnWidth - 30;
+        const maxY = window.innerHeight - btnHeight - 30;
+        const minX = 20;
+        const minY = 20;
+        
+        const newX = Math.random() * (maxX - minX) + minX;
+        const newY = Math.random() * (maxY - minY) + minY;
+        
+        maybeBtn.style.position = 'fixed';
+        maybeBtn.style.left = `${newX}px`;
+        maybeBtn.style.top = `${newY}px`;
+        maybeBtn.style.zIndex = '999';
+        maybeBtn.style.transition = 'all 0.2s ease';
+        
+        maybeBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            if (maybeBtn) maybeBtn.style.transform = 'scale(1)';
+        }, 150);
+    }
+
+    function startMaybeEscape() {
+        if (maybeMoveInterval) clearInterval(maybeMoveInterval);
+        maybeMoveInterval = setInterval(() => {
+            escapeMaybeButton();
+        }, 400);
+    }
+
+    function stopMaybeEscape() {
+        if (maybeMoveInterval) {
+            clearInterval(maybeMoveInterval);
+            maybeMoveInterval = null;
+        }
+    }
+
+    // Hover pe continuous escape
+    maybeBtn.addEventListener('mouseenter', () => {
+        startMaybeEscape();
+    });
+
+    // CLICK pe bhi turant escape!
+    maybeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        escapeMaybeButton();
+        
+        const cuteMsg = document.createElement('div');
+        cuteMsg.innerText = "🏃‍♂️ Hehe! Pakdo toh sahi! 😜💕";
+        cuteMsg.style.position = 'fixed';
+        cuteMsg.style.bottom = '20px';
+        cuteMsg.style.left = '50%';
+        cuteMsg.style.transform = 'translateX(-50%)';
+        cuteMsg.style.backgroundColor = '#ff99bb';
+        cuteMsg.style.color = 'white';
+        cuteMsg.style.padding = '10px 20px';
+        cuteMsg.style.borderRadius = '60px';
+        cuteMsg.style.zIndex = '2000';
+        cuteMsg.style.fontWeight = 'bold';
+        cuteMsg.style.fontSize = '1rem';
+        cuteMsg.style.whiteSpace = 'nowrap';
+        document.body.appendChild(cuteMsg);
+        
+        setTimeout(() => cuteMsg.remove(), 1500);
+        
+        setTimeout(() => {
+            if (maybeBtn.matches(':hover')) {
+                startMaybeEscape();
+            }
+        }, 100);
+    });
+
+    maybeBtn.addEventListener('mouseleave', () => {
+        stopMaybeEscape();
+    });
+
+    // Right click pe bhi bhagega
+    maybeBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        escapeMaybeButton();
+        return false;
+    });
+
+    // Window resize pe button screen ke andar rahe
+    window.addEventListener('resize', () => {
+        if (maybeBtn && maybeBtn.style.position === 'fixed') {
+            const btnRect = maybeBtn.getBoundingClientRect();
+            const maxX = window.innerWidth - btnRect.width - 30;
+            const maxY = window.innerHeight - btnRect.height - 30;
+            
+            let newLeft = parseFloat(maybeBtn.style.left);
+            let newTop = parseFloat(maybeBtn.style.top);
+            
+            if (newLeft > maxX) maybeBtn.style.left = `${maxX - 20}px`;
+            if (newTop > maxY) maybeBtn.style.top = `${maxY - 20}px`;
+            if (newLeft < 20) maybeBtn.style.left = `20px`;
+            if (newTop < 20) maybeBtn.style.top = `20px`;
+        }
+    });
+
+    const observer = new MutationObserver((mutations) => {
+        if (mainSite.classList.contains('active') && !heartCanvas) {
+            startFloatingHearts();
+        }
+    });
+    observer.observe(mainSite, { attributes: true, attributeFilter: ['class'] });
+</script>
+</body>
+</html>
